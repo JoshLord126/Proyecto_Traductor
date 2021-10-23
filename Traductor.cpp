@@ -14,6 +14,9 @@ struct palabra{
 //Variables que ayudaran a no modificar un campo en especifico
 string nombre_tem, traduccion_tem, significado_tem;
 
+//Variable de improvisto para eliminar :v
+int borra_ese;
+
 void crear_archivo(){
 	FILE *archivo = fopen(palabrastxt, "r+b");
 	if (!archivo){
@@ -25,11 +28,13 @@ void leer(int buscar){
 	//Si buscar es igual a "1" la función buscara un item; Si buscar es distinto a "1" mostrara todos los items
 	FILE *archivo = fopen(palabrastxt, "rb");
 	palabra pal;
+	
 	int id=1, bus;	
 	fread(&pal,sizeof(palabra),1,archivo);
 	if(buscar == 1){
 		cout<<"Ingrese el ID del objeto a buscar: ";
 		cin>>bus;
+		cout<<"\n\n";
 	}
 
 	do{	
@@ -43,7 +48,7 @@ void leer(int buscar){
 	fclose(archivo);
 }
 
-
+//Guarda los valores a remplazar en una variable
 void ayuda_remplazar(int help){
 	FILE *archivo = fopen(palabrastxt, "rb");
 	palabra pal;
@@ -82,56 +87,104 @@ void ingreso(int cremo){
 		cin.ignore();
 	}
 	
-	cout<<"Ingrese el nombre:";
-	getline(cin,str_nombre);
-	if(str_nombre == "0"){
-		strcpy(pal.nombre, nombre_tem.c_str());
-	}else{
-		strcpy(pal.nombre, str_nombre.c_str());
+	//Si es verdadero se "borrara"
+	if(borra_ese == 1){
+		strcpy(pal.nombre, " ");
+		strcpy(pal.traduccion, " ");
+		strcpy(pal.significado, " ");
+	}else{	
+		
+		//Si no es necesario remplazar un valor en especifico se ingresa 0; Al ingresar 0, este valor se remplaza por la variable temporal (Vease ayuda_remplazar()). 
+		cout<<"Ingrese el nombre:";
+		getline(cin,str_nombre);
+		if(str_nombre == "0"){
+			strcpy(pal.nombre, nombre_tem.c_str());
+		}else{
+			strcpy(pal.nombre, str_nombre.c_str());
+		}
+		
+		cout<<"Ingrese la traduccion:";
+		getline(cin,str_traduccion);
+		if(str_traduccion == "0"){
+			strcpy(pal.traduccion, traduccion_tem.c_str());
+		}else{
+			strcpy(pal.traduccion, str_traduccion.c_str());
+		}
+		
+		
+		cout<<"Ingrese el significado:";
+		getline(cin,str_significado);
+		if(str_significado == "0"){
+			strcpy(pal.significado, significado_tem.c_str());
+		}else{
+			strcpy(pal.significado, str_significado.c_str());
+		}
+		
+		//cin.ignore();
+		
+		//leer(0);
 	}
 	
-	cout<<"Ingrese la traduccion:";
-	getline(cin,str_traduccion);
-	if(str_traduccion == "0"){
-		strcpy(pal.traduccion, traduccion_tem.c_str());
-	}else{
-		strcpy(pal.traduccion, str_traduccion.c_str());
-	}
-	
-	
-	cout<<"Ingrese el significado:";
-	getline(cin,str_significado);
-	if(str_significado == "0"){
-		strcpy(pal.significado, significado_tem.c_str());
-	}else{
-		strcpy(pal.significado, str_significado.c_str());
-	}
-	
-	//cin.ignore();
 	fwrite(&pal,sizeof(palabra),1,archivo);
 	fclose(archivo);
-	leer(0);
 }
 
 
-
 int main(){
-	
+	int inp_gen;
+	char inp_dicc;
 	crear_archivo();
-	ingreso_texto();
-	/*
-	char in;
-	leer(0);
-	cout<<"Desea modificar o agregar (m/a)?..";
-	cin>>in;
-	if(in == 'a' || in == 'A'){
-		ingreso(1);
-	}else if(in == 'm' || in == 'M'){
-		ingreso(0);
-	}else{
-		cout<<"Ingresa un valor correcto la proxima vez.";
-	}
-	*/
+	
+	do{
+		cout<<"         Bienvenidos UwU\n\n"<<endl;
+		cout<<"Entrar al traductor .............. 1"<<endl;
+		cout<<"Modificar diccionario ............ 2"<<endl;
+		cout<<"Mostrar palabras ................. 3"<<endl;
+		cout<<"Irme de aqui! .................... 4"<<endl;
+		cout<<"Que deseas hacer Ooni? ";
+		cin>>inp_gen;
+		system("cls");
+		switch (inp_gen){
+			case 1:{
+				ingreso_texto();
+				break;
+			}
+			case 2:{
+				borra_ese = 0;
+				cout<<"       Modificar diccionario UwU\n\n"<<endl;
+				cout<<"Desea modificar, agregar o eliminar (m/a/e)?.. ";
+				cin>>inp_dicc;
+				if(inp_dicc == 'a' || inp_dicc == 'A'){
+					ingreso(1);
+				}else if(inp_dicc == 'm' || inp_dicc == 'M'){
+					ingreso(0);
+				}else if(inp_dicc == 'e' || inp_dicc == 'E'){
+					borra_ese = 1;
+					ingreso(0);
+				}else{
+					cout<<"Ingresa un valor correcto la proxima vez.";
+				}
+				break;
+			}
+			case 3:{
+				cout<<"        Mostrar Palabras UwU\n\n"<<endl;
+				cout<<"Desea mostrar todo o buscar algo en especifico (t/e)?.. ";
+				cin>>inp_dicc;
+				if(inp_dicc == 't' || inp_dicc == 'T'){
+					leer(0);
+				}else if(inp_dicc == 'e' || inp_dicc == 'E'){
+					leer(1);
+				}else{
+					cout<<"Ingresa un valor correcto la proxima vez.";
+				}
+				break;
+			}
+		}
+		system("pause");
+		system("cls");
+	}while(inp_gen !=4);
+	
+
 
 }
 
