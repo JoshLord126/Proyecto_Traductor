@@ -11,6 +11,8 @@ struct palabra{
 	char significado[150];
 };
 
+palabra pal;
+
 //Variables que ayudaran a no modificar un campo en especifico
 string nombre_tem, traduccion_tem, significado_tem;
 
@@ -27,7 +29,7 @@ void crear_archivo(){
 void leer(int buscar){
 	//Si buscar es igual a "1" la función buscara un item; Si buscar es distinto a "1" mostrara todos los items
 	FILE *archivo = fopen(palabrastxt, "rb");
-	palabra pal;
+	//palabra pal;
 	
 	int id=1, bus;	
 	fread(&pal,sizeof(palabra),1,archivo);
@@ -51,7 +53,7 @@ void leer(int buscar){
 //Guarda los valores a remplazar en una variable
 void ayuda_remplazar(int help){
 	FILE *archivo = fopen(palabrastxt, "rb");
-	palabra pal;
+	//palabra pal;
 	int id = 1;
 	fread(&pal,sizeof(palabra),1,archivo);
 	do{	
@@ -68,7 +70,7 @@ void ayuda_remplazar(int help){
 
 void ingreso(int cremo){
 	//Si cremo es igual a "1" la función agregara valores; Si cremo es distingo a "1" la función modificara valores
-	palabra pal;
+	//palabra pal;
 	FILE* archivo = fopen(palabrastxt,"ab");	
 	string str_nombre, str_traduccion, str_significado;
 
