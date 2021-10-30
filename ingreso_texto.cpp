@@ -5,8 +5,9 @@ using namespace std;
 
 const char *palabrastxt = "palabras.txt";
 
-
-string *lineas_temp = new string[5];
+//De momento la cantidad de lineas se define aca
+int lineas_total = 10;
+string *lineas_temp = new string[lineas_total];
 
 
 struct palabra_2{
@@ -61,27 +62,27 @@ void identificar_palabra(string prueba, int cont){
 }
 
 
-void ingreso_texto(){
+void ingreso_del_texto(){
 	string *lineas;
-	lineas = new string [5];
+	lineas = new string [lineas_total];
 	
 	cout<<"----------------SU CODIGO AQUI--------------------"<<endl;
-	//De momento solo lee 5 lineas para pruebas
+	
 	cin.ignore();
-	for(int i=0;i<5;i++){
+	for(int i=0;i<lineas_total;i++){
 		cout<<i+1<<"| ";
 		getline(cin, lineas[i]);
 		identificar_palabra(lineas[i], i);
 	}
 	
 	cout<<"\n\n-------------------Resultado-----------------------"<<endl;
-	for(int i=0;i<5;i++){
+	for(int i=0;i<lineas_total;i++){
 		cout<<i+1<<"| "<<lineas_temp[i]<<endl;
 	}
 	
 	delete lineas;
 	delete lineas_temp;
+	
+	void menu();
 };
-
-
 

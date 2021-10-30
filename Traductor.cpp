@@ -131,12 +131,10 @@ void ingreso(int cremo){
 	fclose(archivo);
 }
 
-
-int main(){
+void menu(){
 	int inp_gen;
 	char inp_dicc;
-	crear_archivo();
-	
+		
 	do{
 		cout<<"         Bienvenidos UwU\n\n"<<endl;
 		cout<<"Entrar al traductor .............. 1"<<endl;
@@ -148,7 +146,7 @@ int main(){
 		system("cls");
 		switch (inp_gen){
 			case 1:{
-				ingreso_texto();
+				ingreso_del_texto();
 				break;
 			}
 			case 2:{
@@ -187,6 +185,12 @@ int main(){
 	}while(inp_gen !=4);
 	
 
+}
+
+int main(){
+	
+	crear_archivo();
+	menu();
 
 }
 
