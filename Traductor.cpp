@@ -31,7 +31,9 @@ void leer(int buscar){
 	FILE *archivo = fopen(palabrastxt, "rb");
 	//palabra pal;
 	
-	int id=1, bus;	
+	int id=1, bus;
+	string kam;
+	
 	fread(&pal,sizeof(palabra),1,archivo);
 	if(buscar == 1){
 		cout<<"Ingrese el ID del objeto a buscar: ";
@@ -41,7 +43,10 @@ void leer(int buscar){
 
 	do{	
 		if(buscar == 1 && id == bus || buscar == 0){
-			cout<<"ID: "<<id<<"\nNombre: "<<pal.nombre<<"\nTraduccion: "<<pal.traduccion<<"\nSignificado: "<<pal.significado<<endl<<endl;
+			kam = pal.nombre;
+			if(kam != "--"){
+				cout<<"ID: "<<id<<"\nNombre: "<<pal.nombre<<"\nTraduccion: "<<pal.traduccion<<"\nSignificado: "<<pal.significado<<endl<<endl;
+			}
 		}
 		fread(&pal,sizeof(palabra),1,archivo);
 		id += 1;
@@ -91,9 +96,9 @@ void ingreso(int cremo){
 	
 	//Si es verdadero se "borrara"
 	if(borra_ese == 1){
-		strcpy(pal.nombre, " ");
-		strcpy(pal.traduccion, " ");
-		strcpy(pal.significado, " ");
+		strcpy(pal.nombre, "--");
+		strcpy(pal.traduccion, "--");
+		strcpy(pal.significado, "--");
 	}else{	
 		
 		//Si no es necesario remplazar un valor en especifico se ingresa 0; Al ingresar 0, este valor se remplaza por la variable temporal (Vease ayuda_remplazar()). 
@@ -131,17 +136,43 @@ void ingreso(int cremo){
 	fclose(archivo);
 }
 
+
+void bannermotd(){
+	cout<<"UUUUUUUU     UUUUUUUUMMMMMMMM               MMMMMMMM        GGGGGGGGGGGGG"<<endl;
+	cout<<"U::::::U     U::::::UM:::::::M             M:::::::M     GGG::::::::::::G"<<endl;
+	cout<<"U::::::U     U::::::UM::::::::M           M::::::::M   GG:::::::::::::::G"<<endl;
+	cout<<"UU:::::U     U:::::UUM:::::::::M         M:::::::::M  G:::::GGGGGGGG::::G"<<endl;
+	cout<<" U:::::U     U:::::U M::::::::::M       M::::::::::M G:::::G       GGGGGG"<<endl;
+	cout<<" U:::::D     D:::::U M:::::::::::M     M:::::::::::MG:::::G              "<<endl;
+	cout<<" U:::::D     D:::::U M:::::::M::::M   M::::M:::::::MG:::::G              "<<endl;
+	cout<<" U:::::D     D:::::U M::::::M M::::M M::::M M::::::MG:::::G    GGGGGGGGGG"<<endl;
+	cout<<" U:::::D     D:::::U M::::::M  M::::M::::M  M::::::MG:::::G    G::::::::G"<<endl;
+	cout<<" U:::::D     D:::::U M::::::M   M:::::::M   M::::::MG:::::G    GGGGG::::G"<<endl;
+	cout<<" U:::::D     D:::::U M::::::M    M:::::M    M::::::MG:::::G        G::::G"<<endl;
+	cout<<" U::::::U   U::::::U M::::::M     MMMMM     M::::::M G:::::G       G::::G"<<endl;
+	cout<<" U:::::::UUU:::::::U M::::::M               M::::::M  G:::::GGGGGGGG::::G"<<endl;
+	cout<<"  UU:::::::::::::UU  M::::::M               M::::::M   GG:::::::::::::::G"<<endl;
+	cout<<"    UU:::::::::UU    M::::::M               M::::::M     GGG::::::GGG:::G"<<endl;
+    cout<<"      UUUUUUUUU      MMMMMMMM               MMMMMMMM        GGGGGG   GGGG"<<endl<<endl<<endl;
+}
+
 void menu(){
+	system("color 02");
 	int inp_gen;
 	char inp_dicc;
 		
 	do{
-		cout<<"         Bienvenidos UwU\n\n"<<endl;
-		cout<<"Entrar al traductor .............. 1"<<endl;
-		cout<<"Modificar diccionario ............ 2"<<endl;
-		cout<<"Mostrar palabras ................. 3"<<endl;
-		cout<<"Irme de aqui! .................... 4"<<endl;
-		cout<<"Que deseas hacer Ooni? ";
+		bannermotd();
+		cout<<"|-------------------------------------------------------------------------|"<<endl;
+		cout<<"|Entrar al traductor                                                    1 |"<<endl;
+		cout<<"|-------------------------------------------------------------------------|"<<endl;
+		cout<<"|Modificar diccionario                                                  2 |"<<endl;
+		cout<<"|-------------------------------------------------------------------------|"<<endl;
+		cout<<"|Mostrar palabras                                                       3 |"<<endl;
+		cout<<"|-------------------------------------------------------------------------|"<<endl;
+		cout<<"|Salir                                                                  4 |"<<endl;
+		cout<<"|-------------------------------------------------------------------------|"<<endl<<endl;
+		cout<<"Que deseas hacer? ";
 		cin>>inp_gen;
 		system("cls");
 		switch (inp_gen){
@@ -151,7 +182,7 @@ void menu(){
 			}
 			case 2:{
 				borra_ese = 0;
-				cout<<"       Modificar diccionario UwU\n\n"<<endl;
+				cout<<"|--------------------------Modificar diccionario--------------------------|\n\n"<<endl;
 				cout<<"Desea modificar, agregar o eliminar (m/a/e)?.. ";
 				cin>>inp_dicc;
 				if(inp_dicc == 'a' || inp_dicc == 'A'){
@@ -167,7 +198,7 @@ void menu(){
 				break;
 			}
 			case 3:{
-				cout<<"        Mostrar Palabras UwU\n\n"<<endl;
+				cout<<"|----------------------------Mostrar Palabras-----------------------------|\n\n"<<endl;
 				cout<<"Desea mostrar todo o buscar algo en especifico (t/e)?.. ";
 				cin>>inp_dicc;
 				if(inp_dicc == 't' || inp_dicc == 'T'){
@@ -183,12 +214,9 @@ void menu(){
 		system("pause");
 		system("cls");
 	}while(inp_gen !=4);
-	
-
 }
 
 int main(){
-	
 	crear_archivo();
 	menu();
 

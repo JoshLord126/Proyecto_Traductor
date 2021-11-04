@@ -1,12 +1,13 @@
 #include <iostream>
 #include <string.h>
+#include <windows.h>
 
 using namespace std;
 
 const char *palabrastxt = "palabras.txt";
 
 //De momento la cantidad de lineas se define aca
-int lineas_total = 10;
+int lineas_total = 500;
 string *lineas_temp = new string[lineas_total];
 
 
@@ -65,24 +66,42 @@ void identificar_palabra(string prueba, int cont){
 void ingreso_del_texto(){
 	string *lineas;
 	lineas = new string [lineas_total];
+	int juls, i;
 	
-	cout<<"----------------SU CODIGO AQUI--------------------"<<endl;
-	
+	cout<<"|----------------------------Su Codigo Aqui-------------------------------|\n\n"<<endl;
+
 	cin.ignore();
-	for(int i=0;i<lineas_total;i++){
+	for(i=0;i<lineas_total;i++){
+		lineas_temp[i] = "";
 		cout<<i+1<<"| ";
 		getline(cin, lineas[i]);
 		identificar_palabra(lineas[i], i);
+		if(lineas[i] == "Fin."){
+			juls = i;
+			i = 501;
+		}
 	}
 	
-	cout<<"\n\n-------------------Resultado-----------------------"<<endl;
-	for(int i=0;i<lineas_total;i++){
+	for(i=0;i<=100;i+=10){
+		if(i<40){
+			system("color 04");
+		}else if(i<70){
+			system("color 06");
+		}else if(i<101){
+			system("color 02");
+		}
+		system("cls");
+		cout<<"Traduciendo %"<<i;
+	}
+	
+	system("cls");
+	cout<<"|-------------------------------Resultado---------------------------------|\n\n"<<endl;
+	for(i=0;i<juls;i++){
 		cout<<i+1<<"| "<<lineas_temp[i]<<endl;
+		Sleep(70);
 	}
 	
-	delete lineas;
-	delete lineas_temp;
-	
-	void menu();
+	//delete lineas;
+	//delete lineas_temp;
 };
 
